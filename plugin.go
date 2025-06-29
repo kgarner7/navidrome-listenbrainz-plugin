@@ -89,8 +89,11 @@ func (l ListenBrainzAgent) GetArtistTopSongs(ctx context.Context, req *api.Artis
 		return nil, fmt.Errorf("failed to parse ListenBrainz response: %w", err)
 	}
 
-	songs := make([]*api.Song, len(tracks))
-	for idx, track := range tracks {
+	// Make sure we do not exceed the number of requested songs.
+	count := min(len(tracks), int(req.Count))
+
+	songs := make([]*api.Song, count)
+	for idx, track := range tracks[:count] {
 		songs[idx] = &api.Song{
 			Mbid: track.RecordingMbid,
 			Name: track.RecordingName,
@@ -168,8 +171,11 @@ func (l ListenBrainzAgent) GetSimilarArtists(ctx context.Context, req *api.Artis
 		return nil, fmt.Errorf("failed to parse ListenBrainz response: %w", err)
 	}
 
-	artists := make([]*api.Artist, len(lbzArtists))
-	for i, artist := range lbzArtists {
+	// Make sure we do not exceed the number of requested songs.
+	count := min(len(lbzArtists), int(req.Limit))
+
+	artists := make([]*api.Artist, count)
+	for i, artist := range lbzArtists[:count] {
 		artists[i] = &api.Artist{
 			Mbid: artist.MBID,
 			Name: artist.Name,
