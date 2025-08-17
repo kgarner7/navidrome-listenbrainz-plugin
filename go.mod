@@ -1,8 +1,10 @@
 module github.com/kgarner7/navidrome-listenbrainz-plugin
 
-go 1.24.4
+go 1.24.5
 
-require github.com/navidrome/navidrome v0.56.2-0.20250623004538-f1fc2cd9b917
+toolchain go1.24.6
+
+require github.com/navidrome/navidrome v0.58.0
 
 require (
 	github.com/knqyf263/go-plugin v0.9.0 // indirect

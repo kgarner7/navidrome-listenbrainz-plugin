@@ -3,7 +3,7 @@
   "$id": "navidrome://plugins/manifest/brainz",
   "name": "brainz",
   "author": "Kendall Garner",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Retrieve metadata from ListenBrainz and ListenBrainz labs API",
   "website": "https://listenbrainz.org",
   "capabilities": ["MetadataAgent"],
