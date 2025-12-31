@@ -30,5 +30,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: brainz.ndp
+          name: brainz
           path: brainz.ndp
