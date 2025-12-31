@@ -1,7 +1,3 @@
-permissions:
-  issues: write
-  pull-requests: write
-
 name: Add download link to PR
 on:
   workflow_run:
@@ -11,6 +7,8 @@ jobs:
   pr_comment:
     if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/github-script@v3
         with:
