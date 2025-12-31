@@ -1,3 +1,6 @@
+permissions:
+  pull-requests: write
+
 name: Add download link to PR
 on:
   workflow_run:
