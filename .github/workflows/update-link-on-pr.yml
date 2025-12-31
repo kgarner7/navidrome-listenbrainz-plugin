@@ -1,4 +1,5 @@
 permissions:
+  issues: write
   pull-requests: write
 
 name: Add download link to PR
