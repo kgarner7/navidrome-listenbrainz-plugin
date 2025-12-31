@@ -50,19 +50,19 @@ type trackInfo struct {
 	RecordingMbid string `json:"recording_mbid"`
 }
 
-func (l ListenBrainzAgent) GetArtistTopSongs(req metadata.TopSongsRequest) (metadata.TopSongsResponse, error) {
+func (l ListenBrainzAgent) GetArtistTopSongs(req metadata.TopSongsRequest) (*metadata.TopSongsResponse, error) {
 	if req.MBID == "" {
-		return metadata.TopSongsResponse{}, notFound
+		return nil, notFound
 	}
 
 	resp, err := listenBrainzRequest("popularity/top-recordings-for-artist/"+req.MBID, url.Values{})
 	if err != nil {
-		return metadata.TopSongsResponse{}, err
+		return nil, err
 	}
 
 	var tracks []trackInfo
 	if err := json.Unmarshal(resp, &tracks); err != nil {
-		return metadata.TopSongsResponse{}, fmt.Errorf("failed to parse ListenBrainz response: %w", err)
+		return nil, fmt.Errorf("failed to parse ListenBrainz response: %w", err)
 	}
 
 	// Make sure we do not exceed the number of requested songs.
@@ -76,7 +76,7 @@ func (l ListenBrainzAgent) GetArtistTopSongs(req metadata.TopSongsRequest) (meta
 		}
 	}
 
-	return metadata.TopSongsResponse{Songs: songs}, nil
+	return &metadata.TopSongsResponse{Songs: songs}, nil
 }
 
 type artistMetadataResult struct {
@@ -85,9 +85,9 @@ type artistMetadataResult struct {
 	} `json:"rels,omitzero"`
 }
 
-func (l ListenBrainzAgent) GetArtistURL(req metadata.ArtistRequest) (metadata.ArtistURLResponse, error) {
+func (l ListenBrainzAgent) GetArtistURL(req metadata.ArtistRequest) (*metadata.ArtistURLResponse, error) {
 	if req.MBID == "" {
-		return metadata.ArtistURLResponse{}, notFound
+		return nil, notFound
 	}
 
 	params := url.Values{}
@@ -95,23 +95,23 @@ func (l ListenBrainzAgent) GetArtistURL(req metadata.ArtistRequest) (metadata.Ar
 
 	resp, err := listenBrainzRequest("metadata/artist", params)
 	if err != nil {
-		return metadata.ArtistURLResponse{}, err
+		return nil, err
 	}
 
 	var result []artistMetadataResult
 	if err := json.Unmarshal(resp, &result); err != nil {
-		return metadata.ArtistURLResponse{}, fmt.Errorf("failed to parse ListenBrainz response: %w", err)
+		return nil, fmt.Errorf("failed to parse ListenBrainz response: %w", err)
 	}
 
 	if len(result) != 1 {
-		return metadata.ArtistURLResponse{}, notFound
+		return nil, notFound
 	}
 
 	if result[0].Rels.OfficialHomepage != "" {
-		return metadata.ArtistURLResponse{URL: result[0].Rels.OfficialHomepage}, nil
+		return &metadata.ArtistURLResponse{URL: result[0].Rels.OfficialHomepage}, nil
 	}
 
-	return metadata.ArtistURLResponse{}, notFound
+	return nil, notFound
 }
 
 type artist struct {
@@ -119,9 +119,9 @@ type artist struct {
 	Name string `json:"name"`
 }
 
-func (l ListenBrainzAgent) GetSimilarArtists(req metadata.SimilarArtistsRequest) (metadata.SimilarArtistsResponse, error) {
+func (l ListenBrainzAgent) GetSimilarArtists(req metadata.SimilarArtistsRequest) (*metadata.SimilarArtistsResponse, error) {
 	if req.MBID == "" {
-		return metadata.SimilarArtistsResponse{}, notFound
+		return nil, notFound
 	}
 
 	url := fmt.Sprintf("%ssimilar-artists/json?artist_mbids=%s&algorithm=%s", labsBase, req.MBID, algorithm)
@@ -132,12 +132,12 @@ func (l ListenBrainzAgent) GetSimilarArtists(req metadata.SimilarArtistsRequest)
 	resp := httpReq.Send()
 
 	if resp.Status() != 200 {
-		return metadata.SimilarArtistsResponse{}, fmt.Errorf("ListenBrainz labs HTTP error: status %d, body: %s", resp.Status, string(resp.Body()))
+		return nil, fmt.Errorf("ListenBrainz labs HTTP error: status %d, body: %s", resp.Status, string(resp.Body()))
 	}
 
 	var lbzArtists []artist
 	if err := json.Unmarshal(resp.Body(), &lbzArtists); err != nil {
-		return metadata.SimilarArtistsResponse{}, fmt.Errorf("failed to parse ListenBrainz response: %w", err)
+		return nil, fmt.Errorf("failed to parse ListenBrainz response: %w", err)
 	}
 
 	// Make sure we do not exceed the number of requested songs.
@@ -151,7 +151,7 @@ func (l ListenBrainzAgent) GetSimilarArtists(req metadata.SimilarArtistsRequest)
 		}
 	}
 
-	return metadata.SimilarArtistsResponse{
+	return &metadata.SimilarArtistsResponse{
 		Artists: artists,
 	}, nil
 }
