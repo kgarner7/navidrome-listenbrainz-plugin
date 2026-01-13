@@ -9,7 +9,7 @@
   "permissions": {
     "http": {
       "reason": "To fetch metadata from listenBrainz (and labs)",
-      "allowedHosts": [
+      "requiredHosts": [
         "api.listenbrainz.org",
         "labs.api.listenbrainz.org"
       ]
