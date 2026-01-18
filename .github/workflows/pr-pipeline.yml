@@ -25,7 +25,7 @@ jobs:
         run: tinygo build -o plugin.wasm -target wasip1 -buildmode=c-shared .
 
       - name: Create packate
-        run: zip brainz.ndp plugin.wasm manifest.json README.md LICENSE.md
+        run: zip brainz.ndp plugin.wasm manifest.json
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
