@@ -1,19 +1,18 @@
 {
-  "$schema": "https://raw.githubusercontent.com/navidrome/navidrome/refs/heads/master/plugins/schema/manifest.schema.json",
+  "$schema": "https://raw.githubusercontent.com/navidrome/navidrome/refs/heads/new-plugins/plugins/manifest-schema.json",
   "$id": "navidrome://plugins/manifest/brainz",
   "name": "brainz",
   "author": "Kendall Garner",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Retrieve metadata from ListenBrainz and ListenBrainz labs API",
   "website": "https://listenbrainz.org",
-  "capabilities": ["MetadataAgent"],
   "permissions": {
     "http": {
       "reason": "To fetch metadata from listenBrainz (and labs)",
-      "allowedUrls": {
-        "https://api.listenbrainz.org/*": ["GET"],
-        "https://labs.api.listenbrainz.org/*": ["GET"]
-      }
+      "requiredHosts": [
+        "api.listenbrainz.org",
+        "labs.api.listenbrainz.org"
+      ]
     }
   }
 }
