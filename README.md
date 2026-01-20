@@ -27,24 +27,25 @@ Requirements:
 
 #### Build WASM plugin
 
-##### Using TinyGo
-```bash
-tinygo build -o plugin.wasm -target wasip1 -buildmode=c-shared .
-zip brainz.ndp plugin.wasm manifest.json
-```
-
 ##### Using stock golang
 
 ```bash
-go mod download
-GOOS=wasip1 GOARCH=wasm go build -buildmode=c-shared -o plugin.wasm plugin.go
-zip brainz.ndp plugin.wasm manifest.json
+make
 ```
 
-#### Package plugin
+This is a development build of the plugin. Compilation should be _extremely_ fast
 
-Copy the following files: `manifest.json` and `plugin.wasm`. 
-Put them in a directory in your Navidrome `Plugins.Folder`.
-Make sure that:
-1. You have plugins enabled (`Plugins.Enabled = true`, `ND_PLUGINS_ENABLED = true`).
-2. Your Navidrome user has read permissions in the plugin directory
+##### Using TinyGo
+```bash
+make prod
+```
+
+This is the production version of the plugin.
+Expect compilation to be slower, but the binary is also slower.
+
+#### Install
+
+Copy the package `listenbrainz-metadata-provider.ndp` to your Navidrome plugin directory.
+As an admin user open the plugin page (profile icon > plugins) and enable the `listenbrainz-metadata-provider` plugin.
+
+Add the plugin name (`listenbrainz-metadata-provider`) to your [Agents](https://navidrome.org/docs/usage/configuration/options/#:~:text=Default%20Value-,agents,-ND_AGENTS).
