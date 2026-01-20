@@ -1,11 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/navidrome/navidrome/refs/heads/new-plugins/plugins/manifest-schema.json",
-  "$id": "navidrome://plugins/manifest/brainz",
-  "name": "brainz",
+  "$id": "navidrome://plugins/manifest/listenbrainz-metadata-provider",
+  "name": "listenbrainz-metadata-provider",
   "author": "Kendall Garner",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Retrieve metadata from ListenBrainz and ListenBrainz labs API",
-  "website": "https://listenbrainz.org",
+  "website": "https://github.com/kgarner7/navidrome-listenbrainz-plugin",
   "permissions": {
     "http": {
       "reason": "To fetch metadata from listenBrainz (and labs)",
