@@ -7,6 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"strconv"
+	"time"
 
 	"github.com/extism/go-pdk"
 	"github.com/navidrome/navidrome/plugins/pdk/go/metadata"
@@ -17,6 +19,7 @@ const (
 
 	labsBase  = "https://labs.api.listenbrainz.org/"
 	algorithm = "session_based_days_9000_session_300_contribution_5_threshold_15_limit_50_skip_30"
+	userAgent = "NavidromeListenBrainzPlugin/2.0.2"
 )
 
 var notFound = errors.New("not found")
@@ -30,16 +33,48 @@ var (
 	_ metadata.SimilarArtistsProvider = (*ListenBrainzAgent)(nil)
 )
 
+func processRatelimit(resp *pdk.HTTPResponse) {
+	headers := resp.Headers()
+
+	remaining, remOk := headers["x-ratelimit-remaining"]
+	resetIn, resetOk := headers["x-ratelimit-reset-in"]
+
+	if remOk && resetOk {
+		pdk.Log(pdk.LogTrace, fmt.Sprintf("ListenBrainz ratelimit check: Remaining=%s, Reset in=%s seconds", remaining, resetIn))
+
+		remInt, err := strconv.Atoi(remaining)
+		if err != nil {
+			pdk.Log(pdk.LogWarn, fmt.Sprintf("Rate limit remaining is not a valid number: %s", remaining))
+			return
+		}
+
+		resetInt, err := strconv.Atoi(resetIn)
+		if err != nil {
+			pdk.Log(pdk.LogWarn, fmt.Sprintf("Reset in is not a valid number: %s", resetIn))
+			return
+		}
+
+		// Have a buffer for rate limit, in case some other application comes in at the same time
+		// From my experience, the rate limit is 30 requests / 10 seconds
+		if remInt <= 5 {
+			pdk.Log(pdk.LogWarn, fmt.Sprintf("Approaching rate limit, delaying further processing for %d seconds", resetInt))
+			time.Sleep(time.Duration(resetInt))
+		}
+	}
+}
+
 func listenBrainzRequest(endpoint string, params url.Values) ([]byte, error) {
 	url := fmt.Sprintf("%s%s?%s", lbzEndpoint, endpoint, params.Encode())
 	req := pdk.NewHTTPRequest(pdk.MethodGet, url)
 	req.SetHeader("Accept", "application/json")
-	req.SetHeader("User-Agent", "NavidromeListenBrainzPlugin/0.1")
+	req.SetHeader("User-Agent", userAgent)
 
 	resp := req.Send()
 
+	processRatelimit(&resp)
+
 	if resp.Status() != 200 {
-		return nil, fmt.Errorf("ListenBrainz HTTP error: status %d, body: %s", resp.Status, string(resp.Body()))
+		return nil, fmt.Errorf("ListenBrainz HTTP error: status %d, body: %s", resp.Status(), string(resp.Body()))
 	}
 
 	return resp.Body(), nil
@@ -127,7 +162,7 @@ func (l ListenBrainzAgent) GetSimilarArtists(req metadata.SimilarArtistsRequest)
 	url := fmt.Sprintf("%ssimilar-artists/json?artist_mbids=%s&algorithm=%s", labsBase, req.MBID, algorithm)
 	httpReq := pdk.NewHTTPRequest(pdk.MethodGet, url)
 	httpReq.SetHeader("Accept", "application/json")
-	httpReq.SetHeader("User-Agent", "NavidromeListenBrainzPlugin/0.1")
+	httpReq.SetHeader("User-Agent", userAgent)
 
 	resp := httpReq.Send()
 

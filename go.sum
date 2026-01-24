@@ -1,7 +1,7 @@
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/extism/go-pdk v1.1.3 h1:hfViMPWrqjN6u67cIYRALZTZLk/enSPpNKa+rZ9X2SQ=
-github.com/extism/go-pdk v1.1.3/go.mod h1:Gz+LIU/YCKnKXhgge8yo5Yu1F/lbv7KtKFkiCSzW/P4=
+github.com/extism/go-pdk v1.1.4-0.20260122165646-35abd9e2ba55 h1:FMGmUdqiLsBCWNzm9crXk3d6TZ+ME9M+eLgPuYncxeY=
+github.com/extism/go-pdk v1.1.4-0.20260122165646-35abd9e2ba55/go.mod h1:Gz+LIU/YCKnKXhgge8yo5Yu1F/lbv7KtKFkiCSzW/P4=
 github.com/navidrome/navidrome/plugins/pdk/go v0.0.0-20260112225250-200647450726 h1:Pu7GuKeinHsHpfyMJVhZ8jiPvdDZvQ2l5NRi/Vsosv4=
 github.com/navidrome/navidrome/plugins/pdk/go v0.0.0-20260112225250-200647450726/go.mod h1:5aedoevIXlwUFuR7kbd/WkjaiLg87D3XUFRGIwDBroo=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

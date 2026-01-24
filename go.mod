@@ -2,7 +2,7 @@ module github.com/kgarner7/navidrome-listenbrainz-plugin
 
 go 1.25
 
-require github.com/extism/go-pdk v1.1.3
+require github.com/extism/go-pdk v1.1.4-0.20260122165646-35abd9e2ba55
 
 require github.com/navidrome/navidrome/plugins/pdk/go v0.0.0-20260112225250-200647450726
 

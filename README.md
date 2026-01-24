@@ -43,7 +43,7 @@ make prod
 This is the production version of the plugin.
 Expect compilation to be slower, but the binary is also slower.
 
-#### Install
+### Install
 
 Copy the package `listenbrainz-metadata-provider.ndp` to your Navidrome plugin directory.
 As an admin user open the plugin page (profile icon > plugins) and enable the `listenbrainz-metadata-provider` plugin.

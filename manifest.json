@@ -3,7 +3,7 @@
   "$id": "navidrome://plugins/manifest/listenbrainz-metadata-provider",
   "name": "listenbrainz-metadata-provider",
   "author": "Kendall Garner",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Retrieve metadata from ListenBrainz and ListenBrainz labs API",
   "website": "https://github.com/kgarner7/navidrome-listenbrainz-plugin",
   "permissions": {
