@@ -15,7 +15,7 @@ For older versions of Navidrome, see https://github.com/kgarner7/navidrome-liste
 
 ### From GitHub Release
 
-Put the the ` listenbrainz-metadata-provider.ndp ` file in your Navidrome `Plugins.Folder`.
+Put the the `listenbrainz-metadata-provider.ndp ` file in your Navidrome `Plugins.Folder`.
 
 Make sure that:
 1. You have plugins enabled (`Plugins.Enabled = true`, `ND_PLUGINS_ENABLED = true`).
