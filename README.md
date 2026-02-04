@@ -15,9 +15,13 @@ For older versions of Navidrome, see https://github.com/kgarner7/navidrome-liste
 
 ### From GitHub Release
 
-You can download the `brainz.ndp` from the latest release and then run `navidrome plugin install brainz.ndp`.
-Make sure to run this command as your navidrome user.
-This will unzip the package, and install it automatically in your plugin directory.
+Put the the ` listenbrainz-metadata-provider.ndp ` file in your Navidrome `Plugins.Folder`.
+
+Make sure that:
+1. You have plugins enabled (`Plugins.Enabled = true`, `ND_PLUGINS_ENABLED = true`).
+2. Your Navidrome user has read permissions in the plugin directory
+
+As an admin user open the plugin page (profile icon > plugins) and enable the ` listenbrainz-metadata-provider` plugin.
 
 ### From source
 
