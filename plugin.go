@@ -167,7 +167,7 @@ func (l ListenBrainzAgent) GetSimilarArtists(req metadata.SimilarArtistsRequest)
 	resp := httpReq.Send()
 
 	if resp.Status() != 200 {
-		return nil, fmt.Errorf("ListenBrainz labs HTTP error: status %d, body: %s", resp.Status, string(resp.Body()))
+		return nil, fmt.Errorf("ListenBrainz labs HTTP error: status %d, body: %s", resp.Status(), string(resp.Body()))
 	}
 
 	var lbzArtists []artist
