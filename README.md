@@ -21,7 +21,7 @@ Make sure that:
 1. You have plugins enabled (`Plugins.Enabled = true`, `ND_PLUGINS_ENABLED = true`).
 2. Your Navidrome user has read permissions in the plugin directory
 
-As an admin user open the plugin page (profile icon > plugins) and enable the ` listenbrainz-metadata-provider` plugin.
+As an admin user open the plugin page (profile icon > plugins) and enable the `listenbrainz-metadata-provider` plugin.
 
 ### From source
 
@@ -53,3 +53,36 @@ Copy the package `listenbrainz-metadata-provider.ndp` to your Navidrome plugin d
 As an admin user open the plugin page (profile icon > plugins) and enable the `listenbrainz-metadata-provider` plugin.
 
 Add the plugin name (`listenbrainz-metadata-provider`) to your [Agents](https://navidrome.org/docs/usage/configuration/options/#:~:text=Default%20Value-,agents,-ND_AGENTS).
+
+#### Toml configuration
+
+```toml
+# The order in which it apepars in agents determines what is first.
+# Adjust the order as you see fit
+Agents = "listenbrainz-metadata-provider,lastfm,spotify,deezer"
+
+# For example, if you want to have lastfm first, you can adjust to have last.fm first
+Agents = "lastfm,listenbrainz-metadata-provider,spotify,deezer"
+```
+
+#### Docker compose configuration
+The key is in the `environment` section of your `navidrome` configuration to have the variable `ND_AGENTS`.
+This is also applicable as an environment variable in other platforms.
+
+```yaml
+# Sample docker-compose snippet. This is adapted from https://navidrome.org/docs/installation/docker/
+# The only difference is the ND_AGENTS field in environment
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    user: 1000:1000 # should be owner of volumes
+    ports:
+      - "4533:4533"
+    restart: unless-stopped
+    environment:
+      # This is the relevant section to configure agetns
+      ND_AGENTS: "listenbrainz-metadata-provider,lastfm,spotify,deezer"
+    volumes:
+      - "/path/to/data:/data"
+      - "/path/to/your/music/folder:/music:ro"
+```
