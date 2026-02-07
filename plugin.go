@@ -63,11 +63,21 @@ func processRatelimit(resp *pdk.HTTPResponse) {
 	}
 }
 
+func getToken() string {
+	token, _ := pdk.GetConfig("token")
+	return token
+}
+
 func listenBrainzRequest(endpoint string, params url.Values) ([]byte, error) {
 	url := fmt.Sprintf("%s%s?%s", lbzEndpoint, endpoint, params.Encode())
 	req := pdk.NewHTTPRequest(pdk.MethodGet, url)
 	req.SetHeader("Accept", "application/json")
 	req.SetHeader("User-Agent", userAgent)
+
+	token := getToken()
+	if token != "" {
+		req.SetHeader("Authorization", "Token "+token)
+	}
 
 	resp := req.Send()
 

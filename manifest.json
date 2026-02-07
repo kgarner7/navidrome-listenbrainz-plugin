@@ -14,5 +14,29 @@
         "labs.api.listenbrainz.org"
       ]
     }
+  },
+  "config": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "title": "API Token",
+          "description": "Your ListenBrainz API token for authenticated requests"
+        }
+      }
+    },
+    "uiSchema": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/token",
+          "options": {
+            "multi": true
+          }
+        }
+      ]
+    }
   }
 }
