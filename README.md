@@ -1,3 +1,5 @@
+**Note**: this is archived, as the features are not built in to Navidrome 0.60.2: https://github.com/navidrome/navidrome/releases/tag/v0.60.2
+
 # Navidrome ListenBrainz Plugin
 
 A plugin for Navidrome for fetching the metadata from Listenbrainz:
